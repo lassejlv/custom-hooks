@@ -1,5 +1,6 @@
 import { useFetch } from './hooks/useFetch';
 import { useImages } from './hooks/useImages';
+import { useTitle } from './hooks/useTittle';
 
 interface Post {
   userId: number;
@@ -11,6 +12,8 @@ interface Post {
 export default function App() {
   const { data, error, loading } = useFetch<Post[]>('https://jsonplaceholder.typicode.com/posts');
   const images = useImages();
+
+  useTitle(`Posts - ${data?.length ?? 0}`);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -35,8 +38,7 @@ export default function App() {
       </ul>
 
       {images.map((img) => {
-        return <img key={img} src={img} alt={img} style={{ width: '100px', height: '100px' }}
-        />;
+        return <img key={img} src={img} alt={img} style={{ width: '100px', height: '100px' }} />;
       })}
     </div>
   );
